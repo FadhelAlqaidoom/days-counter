@@ -4,47 +4,21 @@ import { useState } from 'react';
 function App() {
   const [step, setStep] = useState(1);
   const [count, setCount] = useState(0);
-  const [currentDate, setCurrentDate] = useState(new Date());
 
-  const incDate = () => {
-    const newDate = new Date();
-    newDate.setDate(currentDate.getDate() + step);
-    setCurrentDate(newDate);
-  };
-  const decDate = () => {
-    const newDate = new Date();
-    newDate.setDate(currentDate.getDate() - step);
-    setCurrentDate(newDate);
-  };
-
-  const stepInc = () => {
-    setStep(step + 1);
-  };
-  const stepDec = () => {
-    if (step > 1) {
-      setStep(step - 1);
-    }
-  };
-  const countInc = () => {
-    setCount(count + step);
-    incDate();
-  };
-  const countDec = () => {
-    setCount(count - step);
-    decDate();
-  };
+  const date = new Date();
+  date.setDate(date.getDate() + count);
 
   return (
     <div>
       <div>
-        <button onClick={stepDec}>-</button>
+        <button onClick={() => setStep((c) => c - 1)}>-</button>
         step: {step}
-        <button onClick={stepInc}>+</button>
+        <button onClick={() => setStep((c) => c + 1)}>+</button>
       </div>
       <div>
-        <button onClick={countDec}>-</button>
+        <button onClick={() => setCount((c) => c - step)}>-</button>
         count: {count}
-        <button onClick={countInc}>+</button>
+        <button onClick={() => setCount((c) => c + step)}>+</button>
       </div>
       <div>
         {count === 0
@@ -52,7 +26,7 @@ function App() {
           : count < 0
           ? `${count * -1} day ago was `
           : `${count} day from today is `}{' '}
-        {currentDate.toDateString()}
+        {date.toDateString()}
       </div>
     </div>
   );
